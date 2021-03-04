@@ -8,13 +8,25 @@ app.config['SECRET_KEY'] = "secret"
 
 debug = DebugToolbarExtension(app)
 
+
 @app.route("/questions")
 def get_questions():
 
     keys = silly_story.prompts
-    text = silly_story.template
 
     return render_template(
         "questions.html",
-        keys=keys,
-        text=text)
+        keys=keys)
+
+
+@app.route("/story")
+def get_results():
+
+    result = silly_story.generate(request.args)
+
+    print(request.args)
+
+    return render_template(
+        "story.html",
+        result=result
+        )
